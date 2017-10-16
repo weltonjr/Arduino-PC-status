@@ -1,0 +1,13 @@
+{
+    "name": "Arduino-PC-status",
+    "version": "1.0.0",
+    "description": "Exibe em uma tela lcd 16x2 informações do computador via USB-Serial",
+    "main": "app.js",
+    "repository": "https://github.com/weltonjr/Arduino-PC-status",
+    "author": "Welton F.",
+    "license": "MIT",
+    "dependencies": {
+      "systeminformation": "^3.31.2"
+    }
+  }
+  
