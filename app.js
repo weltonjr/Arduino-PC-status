@@ -1,16 +1,30 @@
-const si = require('systeminformation');
+const si = require('systeminformation')
+const SerialPort = require('serial-node')
+const Config = require('./config')
 
-console.log("Hora: ", new Date(si.time().current).toLocaleTimeString())
+serial = new SerialPort();
+//serial.use(Config.serialPort);
+//serial.open();
 
-si.cpuTemperature().then(data=>{
-    console.log("Temperatura: ", data.main)
-})
+let x = true
+while(x){
+    //serial.write('hi!');
+    debug()
+}
 
-si.mem().then(data=>{
-    console.log("Memoria Livre(MB): ", Number((data.available/1024)/1024).toFixed())
-})
+serial.close();
 
-si.currentLoad().then(data=>{
-    console.log("Carga: ", data.currentload)
-})
 
+
+
+async function debug(){
+    console.log("****\nHora: ", new Date(si.time().current).toLocaleTimeString())
+
+    const dataTemp = await si.cpuTemperature()
+    const dataMem = await si.mem()
+    const dataLoad = await si.currentLoad()
+
+    console.log("Temperatura: ", dataTemp.main)
+    console.log("Memoria Livre(MB): ", Number((dataMem.available/1024)/1024).toFixed())
+    console.log("Carga: ", dataLoad.currentload)
+}
