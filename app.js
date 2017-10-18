@@ -1,16 +1,33 @@
+Data = require('./classes')
 const si = require('systeminformation');
+const serial = require('serial-node');
 
-console.log("Hora: ", new Date(si.time().current).toLocaleTimeString())
 
-si.cpuTemperature().then(data=>{
-    console.log("Temperatura: ", data.main)
-})
+// serial.use('COM3');
+// serial.open();
 
-si.mem().then(data=>{
-    console.log("Memoria Livre(MB): ", Number((data.available/1024)/1024).toFixed())
-})
+try{
+    getData()
+}
+finally{
+    //serial.close();
+}
 
-si.currentLoad().then(data=>{
-    console.log("Carga: ", data.currentload)
-})
+function send(data) {
+
+    //serial.write('hi!');
+    console.log(data)
+}
+
+async function getData() {
+    let _data = new Data()
+
+    _data.temperaturaCpu = await si.cpuTemperature()
+    _data.memoriaLivre = await si.mem()
+    _data.cargaAtual = await si.currentLoad()
+
+    send(_data)
+
+    getData()
+}
 
